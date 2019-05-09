@@ -26,8 +26,8 @@ def rebuild_single(env, type, dev_domain, id):
         dev_domain_var = dev_domain
         es = elastic.get();
 
-        q = Request(elastic.get_url() + id + '?elastic=true')
-        q.add_header('Authorization', 'xxx-xxx-xxx-xxx-xxx-xxx')
+        q = Request(elastic.get_url())
+        q.add_header('Authorization', '{auth-key}')
         response = urlopen(q).read().decode('utf8')
 
         data = json.loads(response)
