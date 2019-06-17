@@ -10,6 +10,7 @@ def full_reindex_task(self,env,type,dev_domain):
     try:
         reindexer = ReindexClass(env, type, dev_domain)
         reindexer.full_reindex()
+        reindexer.copy_index()
 
     except Exception as e:
         self.retry(e=e, countdown=180)

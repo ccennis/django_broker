@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     #individual get rebuild command
-    path('rebuild/<env>/<type>/<dev_domain>/<id>', views.queue_rebuild),
+    path('rebuild', views.queue_rebuild.as_view()),
     #post ids update many
-    path('ids', views.rebuild_ids.as_view()),
+    path('rebuild/ids', views.rebuild_ids.as_view()),
 ]

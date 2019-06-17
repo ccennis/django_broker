@@ -1,8 +1,8 @@
 from rest_framework.views import APIView
-from django.http import JsonResponse
 from .tasks import rebuild_task
 import logging
 logger = logging.getLogger(__name__)
+from django.http import JsonResponse
 
 #call to kick off the reindex of a doc type
 class queue_rebuild(APIView):
@@ -29,7 +29,7 @@ class rebuild_ids(APIView):
             queue = env + "-queue-name.fifo"
             for id in ids:
                 rebuild_task.apply_async((env, type, dev_domain, id), priority=9,queue=queue)
-                return JsonResponse({"status": "true"})
+            return JsonResponse({"status" : "true"})
         except Exception as e:
-        logger.error(e)
-        return JsonResponse({"status": "false", "message": e})
+            logger.error(e)
+            return JsonResponse({"status" : "false", "message" : e})

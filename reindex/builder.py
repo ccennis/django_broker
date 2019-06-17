@@ -5,7 +5,7 @@ import time
 import json
 import requests
 from elasticsearch import Elasticsearch
-from django_broker import elastic
+from broker import elastic
 import logging
 logger = logging.getLogger(__name__)
 
@@ -30,8 +30,6 @@ class ReindexClass():
                 results = p.map(self.hit_api, pages)
                 p.close()
                 p.join()
-
-            self.copy_index()
 
             print('done!')
         except Exception as e:
@@ -76,7 +74,6 @@ class ReindexClass():
     def get_total_pages(self):
         print("getting pages")
         q = Request(elastic.get_url(self.environment, self.type, self.dev_domain))
-        q.add_header('Authorization', '{auth-key}')
         response = urlopen(q).read().decode('utf8')
         data = json.loads(response)
 
@@ -87,7 +84,6 @@ class ReindexClass():
         es = elastic.get(self.environment,self.dev_domain)
         actions = []
         q = Request(elastic.get_url(self.environment, self.type, self.dev_domain) + "?page=" + str(page))
-        q.add_header('Authorization', '{auth-key}')
         response = urlopen(q).read().decode('utf8')
         data = json.loads(response)
         for key, value in data.items():
